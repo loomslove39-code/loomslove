@@ -462,6 +462,63 @@ button {
   font-weight: 600;
 }
 
+.featured-desc {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+  font-weight: 300;
+}
+
+.featured-overlay.always-visible {
+  opacity: 1;
+  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.featured-item:hover .featured-overlay.always-visible {
+  background: linear-gradient(180deg, transparent 20%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+/* ============================================
+   CATEGORY SECTIONS
+   ============================================ */
+.category-section {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 2px solid var(--color-accent-light);
+}
+
+.category-section:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.category-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--color-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.category-tagline {
+  color: var(--color-secondary);
+  font-size: 1.05rem;
+  font-weight: 300;
+  margin-bottom: var(--space-sm);
+}
+
+/* Category Badges */
+.budget-badge {
+  background: #4CAF50 !important;
+}
+
+.festive-badge {
+  background: #9C27B0 !important;
+}
+
+.luxury-badge {
+  background: linear-gradient(135deg, #B8860B, #DAA520) !important;
+}
+
 /* ============================================
    ABOUT SECTION
    ============================================ */

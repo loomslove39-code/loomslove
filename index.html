@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="LoomsLove - Discover timeless elegance in our curated collection of beautiful dresses, tops, and accessories. Premium women's fashion boutique offering sophisticated clothing for the modern woman.">
-    <meta name="keywords" content="women's fashion, clothing boutique, dresses, tops, accessories, elegant fashion, premium clothing">
+    <meta name="description"
+        content="LoomsLove - Discover timeless elegance in our curated collection of beautiful dresses, tops, and accessories. Premium women's fashion boutique offering sophisticated clothing for the modern woman.">
+    <meta name="keywords"
+        content="women's fashion, clothing boutique, dresses, tops, accessories, elegant fashion, premium clothing">
     <meta name="author" content="LoomsLove">
-    
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="LoomsLove - Elegant Women's Fashion | Dresses, Tops & Accessories">
-    <meta property="og:description" content="Discover timeless elegance at LoomsLove. Shop our curated collection of beautiful dresses, tops, and accessories.">
+    <meta property="og:description"
+        content="Discover timeless elegance at LoomsLove. Shop our curated collection of beautiful dresses, tops, and accessories.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://loomslove.com">
-    
+
     <title>LoomsLove - Elegant Women's Fashion | Dresses, Tops & Accessories</title>
-    
+
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👗</text></svg>">
-    
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👗</text></svg>">
+
     <!-- Stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
     <!-- Header & Navigation -->
     <header class="header" id="header">
         <nav class="nav-container">
             <a href="#" class="logo">LoomsLove</a>
-            
+
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#collections">Collections</a></li>
@@ -34,7 +40,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#newsletter">Contact</a></li>
             </ul>
-            
+
             <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
                 <span></span>
                 <span></span>
@@ -47,170 +53,195 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>Timeless Elegance</h1>
-            <p>Discover our curated collection of sophisticated women's fashion, crafted for the modern woman who values quality and style</p>
+            <p>Discover our curated collection of sophisticated women's fashion, crafted for the modern woman who values
+                quality and style</p>
             <a href="#products" class="cta-button">Shop Collection</a>
         </div>
     </section>
 
-    <!-- Featured Collections -->
-    <section class="featured-collection">
+    <!-- Our Categories -->
+    <section class="featured-collection" id="collections">
         <div class="section-header">
-            <h2 class="section-title">Featured Collections</h2>
-            <p class="section-subtitle">Explore our handpicked seasonal favorites</p>
+            <h2 class="section-title">Our Categories</h2>
+            <p class="section-subtitle">Find your perfect style — curated with love</p>
         </div>
-        <div class="featured-grid fade-in" id="collections">
-            <div class="featured-item">
-                <img src="images/collection-1.jpg" alt="Spring Collection">
-                <div class="featured-overlay">
-                    <h3 class="featured-title">Spring Florals</h3>
+        <div class="featured-grid fade-in">
+            <a href="#budget-love" class="featured-item">
+                <img src="images/budget-love.png" alt="Budget Love Collection">
+                <div class="featured-overlay always-visible">
+                    <div>
+                        <h3 class="featured-title">Budget Love</h3>
+                        <p class="featured-desc">Affordable everyday fashion</p>
+                    </div>
+                </div>
+            </a>
+            <a href="#classic-love" class="featured-item">
+                <img src="images/classic-love.png" alt="Classic Love Collection">
+                <div class="featured-overlay always-visible">
+                    <div>
+                        <h3 class="featured-title">Classic Love</h3>
+                        <p class="featured-desc">Timeless elegant pieces</p>
+                    </div>
+                </div>
+            </a>
+            <a href="#festive-love" class="featured-item">
+                <img src="images/festive-love.png" alt="Festive Love Collection">
+                <div class="featured-overlay always-visible">
+                    <div>
+                        <h3 class="featured-title">Festive Love</h3>
+                        <p class="featured-desc">Festive & party wear</p>
+                    </div>
+                </div>
+            </a>
+            <a href="#luxury-love" class="featured-item">
+                <img src="images/luxury-love.png" alt="Luxury Love Collection">
+                <div class="featured-overlay always-visible">
+                    <div>
+                        <h3 class="featured-title">Luxury Love</h3>
+                        <p class="featured-desc">Premium high-end fashion</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section" id="products">
+        <div class="section-header">
+            <h2 class="section-title">Shop by Category</h2>
+            <p class="section-subtitle">Handcrafted pieces designed with love and attention to detail</p>
+        </div>
+
+        <!-- Budget Love -->
+        <div class="category-section" id="budget-love">
+            <h3 class="category-heading">💛 Budget Love</h3>
+            <p class="category-tagline">Style doesn't have to break the bank</p>
+            <div class="products-grid fade-in">
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <img src="images/product-2.jpg" alt="Linen Summer Top" class="product-image">
+                        <span class="product-badge budget-badge">Budget</span>
+                        <span style="color:red; cursor:pointer;"
+                            onclick="addToWishlist('Linen Summer Top',899,'images/product-2.jpg')">❤</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Linen Summer Top</h3>
+                        <p class="product-category">Budget Love</p>
+                        <p class="product-price">₹899</p>
+                        <button onclick="addToCart('Linen Summer Top',899,'images/product-2.jpg')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <img src="images/product-5.jpg" alt="Wide Leg Trousers" class="product-image">
+                        <span class="product-badge budget-badge">Budget</span>
+                        <span style="color:red; cursor:pointer;"
+                            onclick="addToWishlist('Wide Leg Trousers',1299,'images/product-5.jpg')">❤</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Wide Leg Trousers</h3>
+                        <p class="product-category">Budget Love</p>
+                        <p class="product-price">₹1299</p>
+                        <button onclick="addToCart('Wide Leg Trousers',1299,'images/product-5.jpg')">Add to
+                            Cart</button>
+                    </div>
                 </div>
             </div>
-            <div class="featured-item">
-                <img src="images/collection-2.jpg" alt="Evening Collection">
-                <div class="featured-overlay">
-                    <h3 class="featured-title">Evening Elegance</h3>
+        </div>
+
+        <!-- Classic Love -->
+        <div class="category-section" id="classic-love">
+            <h3 class="category-heading">🤎 Classic Love</h3>
+            <p class="category-tagline">Timeless pieces that never go out of style</p>
+            <div class="products-grid fade-in">
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <img src="images/product-4.jpg" alt="Cashmere Sweater" class="product-image">
+                        <span style="color:red; cursor:pointer;"
+                            onclick="addToWishlist('Cashmere Sweater',1799,'images/product-4.jpg')">❤</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Cashmere Sweater</h3>
+                        <p class="product-category">Classic Love</p>
+                        <p class="product-price">₹1799</p>
+                        <button onclick="addToCart('Cashmere Sweater',1799,'images/product-4.jpg')">Add to Cart</button>
+                    </div>
                 </div>
             </div>
-            <div class="featured-item">
-                <img src="images/collection-3.jpg" alt="Casual Collection">
-                <div class="featured-overlay">
-                    <h3 class="featured-title">Casual Chic</h3>
+        </div>
+
+        <!-- Festive Love -->
+        <div class="category-section" id="festive-love">
+            <h3 class="category-heading">✨ Festive Love</h3>
+            <p class="category-tagline">Celebrate in style with our festive collection</p>
+            <div class="products-grid fade-in">
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <img src="images/product-3.jpg" alt="Floral Maxi Dress" class="product-image">
+                        <span class="product-badge festive-badge">Festive</span>
+                        <span style="color:red; cursor:pointer;"
+                            onclick="addToWishlist('Floral Maxi Dress',1999,'images/product-3.jpg')">❤</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Floral Maxi Dress</h3>
+                        <p class="product-category">Festive Love</p>
+                        <p class="product-price">₹1999</p>
+                        <button onclick="addToCart('Floral Maxi Dress',1999,'images/product-3.jpg')">Add to
+                            Cart</button>
+                    </div>
                 </div>
             </div>
-            <div class="featured-item">
-                <img src="images/collection-4.jpg" alt="Accessories Collection">
-                <div class="featured-overlay">
-                    <h3 class="featured-title">Accessories</h3>
+        </div>
+
+        <!-- Luxury Love -->
+        <div class="category-section" id="luxury-love">
+            <h3 class="category-heading">👑 Luxury Love</h3>
+            <p class="category-tagline">Indulge in premium craftsmanship</p>
+            <div class="products-grid fade-in">
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <img src="images/product-1.jpg" alt="Silk Evening Dress" class="product-image">
+                        <span class="product-badge luxury-badge">Luxury</span>
+                        <span style="color:red; cursor:pointer;"
+                            onclick="addToWishlist('Silk Evening Dress',2999,'images/product-1.jpg')">❤</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Silk Evening Dress</h3>
+                        <p class="product-category">Luxury Love</p>
+                        <p class="product-price">₹2999</p>
+                        <button onclick="addToCart('Silk Evening Dress',2999,'images/product-1.jpg')">Add to
+                            Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <img src="images/product-6.jpg" alt="Leather Handbag" class="product-image">
+                        <span class="product-badge luxury-badge">Luxury</span>
+                        <span style="color:red; cursor:pointer;"
+                            onclick="addToWishlist('Leather Handbag',2499,'images/product-6.jpg')">❤</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Leather Handbag</h3>
+                        <p class="product-category">Luxury Love</p>
+                        <p class="product-price">₹2499</p>
+                        <button onclick="addToCart('Leather Handbag',2499,'images/product-6.jpg')">Add to Cart</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
-  <!-- Products Section -->
-<section class="section" id="products">
-    <div class="section-header">
-        <h2 class="section-title">Our Collection</h2>
-        <p class="section-subtitle">Handcrafted pieces designed with love and attention to detail</p>
-    </div>
-    
-    <div class="products-grid fade-in">
-
-        <!-- Product 1 -->
-        <div class="product-card">
-            <div class="product-image-wrapper">
-                <img src="images/product-1.jpg" alt="Silk Evening Dress" class="product-image">
-                <span class="product-badge">New</span>
-                <span style="color:red; cursor:pointer;"
-                      onclick="addToWishlist('Silk Evening Dress',2999,'images/product-1.jpg')">❤</span>
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">Silk Evening Dress</h3>
-                <p class="product-category">Dresses</p>
-                <p class="product-price">₹2999</p>
-                <button onclick="addToCart('Silk Evening Dress',2999,'images/product-1.jpg')">
-                    Add to Cart
-                </button>
-            </div>
-        </div>
-
-        <!-- Product 2 -->
-        <div class="product-card">
-            <div class="product-image-wrapper">
-                <img src="images/product-2.jpg" alt="Linen Summer Top" class="product-image">
-                <span style="color:red; cursor:pointer;"
-                      onclick="addToWishlist('Linen Summer Top',899,'images/product-2.jpg')">❤</span>
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">Linen Summer Top</h3>
-                <p class="product-category">Tops</p>
-                <p class="product-price">₹899</p>
-                <button onclick="addToCart('Linen Summer Top',899,'images/product-2.jpg')">
-                    Add to Cart
-                </button>
-            </div>
-        </div>
-
-        <!-- Product 3 -->
-        <div class="product-card">
-            <div class="product-image-wrapper">
-                <img src="images/product-3.jpg" alt="Floral Maxi Dress" class="product-image">
-                <span class="product-badge">Sale</span>
-                <span style="color:red; cursor:pointer;"
-                      onclick="addToWishlist('Floral Maxi Dress',1999,'images/product-3.jpg')">❤</span>
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">Floral Maxi Dress</h3>
-                <p class="product-category">Dresses</p>
-                <p class="product-price">₹1999</p>
-                <button onclick="addToCart('Floral Maxi Dress',1999,'images/product-3.jpg')">
-                    Add to Cart
-                </button>
-            </div>
-        </div>
-
-        <!-- Product 4 -->
-        <div class="product-card">
-            <div class="product-image-wrapper">
-                <img src="images/product-4.jpg" alt="Cashmere Sweater" class="product-image">
-                <span style="color:red; cursor:pointer;"
-                      onclick="addToWishlist('Cashmere Sweater',1799,'images/product-4.jpg')">❤</span>
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">Cashmere Sweater</h3>
-                <p class="product-category">Tops</p>
-                <p class="product-price">₹1799</p>
-                <button onclick="addToCart('Cashmere Sweater',1799,'images/product-4.jpg')">
-                    Add to Cart
-                </button>
-            </div>
-        </div>
-
-        <!-- Product 5 -->
-        <div class="product-card">
-            <div class="product-image-wrapper">
-                <img src="images/product-5.jpg" alt="Wide Leg Trousers" class="product-image">
-                <span class="product-badge">New</span>
-                <span style="color:red; cursor:pointer;"
-                      onclick="addToWishlist('Wide Leg Trousers',1299,'images/product-5.jpg')">❤</span>
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">Wide Leg Trousers</h3>
-                <p class="product-category">Bottoms</p>
-                <p class="product-price">₹1299</p>
-                <button onclick="addToCart('Wide Leg Trousers',1299,'images/product-5.jpg')">
-                    Add to Cart
-                </button>
-            </div>
-        </div>
-
-        <!-- Product 6 -->
-        <div class="product-card">
-            <div class="product-image-wrapper">
-                <img src="images/product-6.jpg" alt="Leather Handbag" class="product-image">
-                <span style="color:red; cursor:pointer;"
-                      onclick="addToWishlist('Leather Handbag',2499,'images/product-6.jpg')">❤</span>
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">Leather Handbag</h3>
-                <p class="product-category">Accessories</p>
-                <p class="product-price">₹2499</p>
-                <button onclick="addToCart('Leather Handbag',2499,'images/product-6.jpg')">
-                    Add to Cart
-                </button>
-            </div>
-        </div>
-
-    </div>
-</section>
     <!-- About Section -->
     <section class="about-section" id="about">
         <div class="section-header">
             <h2 class="section-title">Our Story</h2>
         </div>
         <div class="about-content fade-in">
-            <p>LoomsLove was born from a passion for creating timeless, elegant pieces that empower women to feel confident and beautiful. Each garment in our collection is carefully curated to combine classic sophistication with modern design.</p>
-            <p>We believe in sustainable fashion, quality craftsmanship, and the power of clothing to transform not just how you look, but how you feel.</p>
-            
+            <p>LoomsLove was born from a passion for creating timeless, elegant pieces that empower women to feel
+                confident and beautiful. Each garment in our collection is carefully curated to combine classic
+                sophistication with modern design.</p>
+            <p>We believe in sustainable fashion, quality craftsmanship, and the power of clothing to transform not just
+                how you look, but how you feel.</p>
+
             <div class="about-values">
                 <div class="value-card">
                     <div class="value-icon">✨</div>
@@ -234,16 +265,12 @@
     <!-- Newsletter Section -->
     <section class="newsletter" id="newsletter">
         <h2 class="section-title" style="color: white;">Stay Connected</h2>
-        <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.9);">Subscribe to receive exclusive offers and style inspiration</p>
-        
+        <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.9);">Subscribe to receive exclusive offers and
+            style inspiration</p>
+
         <form class="newsletter-form" id="newsletterForm">
-            <input 
-                type="email" 
-                class="newsletter-input" 
-                placeholder="Enter your email address" 
-                required
-                aria-label="Email address"
-            >
+            <input type="email" class="newsletter-input" placeholder="Enter your email address" required
+                aria-label="Email address">
             <button type="submit" class="newsletter-button">Subscribe</button>
         </form>
     </section>
@@ -261,7 +288,7 @@
                     <a href="#" class="social-icon" aria-label="Twitter">🐦</a>
                 </div>
             </div>
-            
+
             <div class="footer-section">
                 <h3>Shop</h3>
                 <ul class="footer-links">
@@ -272,7 +299,7 @@
                     <li><a href="#products">Sale</a></li>
                 </ul>
             </div>
-            
+
             <div class="footer-section">
                 <h3>Support</h3>
                 <ul class="footer-links">
@@ -283,7 +310,7 @@
                     <li><a href="#">FAQ</a></li>
                 </ul>
             </div>
-            
+
             <div class="footer-section">
                 <h3>Contact</h3>
                 <ul class="footer-links">
@@ -293,7 +320,7 @@
                 </ul>
             </div>
         </div>
-        
+
         <div class="footer-bottom">
             <p>&copy; 2026 LoomsLove. All rights reserved. Crafted with ❤️ for fashion lovers everywhere.</p>
         </div>
@@ -302,21 +329,22 @@
     <!-- JavaScript -->
     <script src="js/main.js"></script>
 
-<script>
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    <script>
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
-function addToCart(name, price, image) {
-    cart.push({ name, price, image });
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert(name + " added to Cart");
-}
+        function addToCart(name, price, image) {
+            cart.push({ name, price, image });
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert(name + " added to Cart");
+        }
 
-function addToWishlist(name, price, image) {
-    wishlist.push({ name, price, image });
-    localStorage.setItem("wishlist", JSON.stringify(wishlist));
-    alert(name + " added to Wishlist");
-}
-</script>  
+        function addToWishlist(name, price, image) {
+            wishlist.push({ name, price, image });
+            localStorage.setItem("wishlist", JSON.stringify(wishlist));
+            alert(name + " added to Wishlist");
+        }
+    </script>
 </body>
+
 </html>
