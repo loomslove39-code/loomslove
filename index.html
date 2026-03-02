@@ -86,85 +86,122 @@
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section class="section" id="products">
-        <div class="section-header">
-            <h2 class="section-title">Our Collection</h2>
-            <p class="section-subtitle">Handcrafted pieces designed with love and attention to detail</p>
-        </div>
-        
-        <div class="products-grid fade-in">
-            <div class="product-card">
-                <div class="product-image-wrapper">
-                    <img src="images/product-1.jpg" alt="Silk Evening Dress" class="product-image">
-                    <span class="product-badge">New</span>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Silk Evening Dress</h3>
-                    <p class="product-category">Dresses</p>
-                    <p class="product-price">$299</p>
-                </div>
-            </div>
-            
-            <div class="product-card">
-                <div class="product-image-wrapper">
-                    <img src="images/product-2.jpg" alt="Linen Summer Top" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Linen Summer Top</h3>
-                    <p class="product-category">Tops</p>
-                    <p class="product-price">$89</p>
-                </div>
-            </div>
-            
-            <div class="product-card">
-                <div class="product-image-wrapper">
-                    <img src="images/product-3.jpg" alt="Floral Maxi Dress" class="product-image">
-                    <span class="product-badge">Sale</span>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Floral Maxi Dress</h3>
-                    <p class="product-category">Dresses</p>
-                    <p class="product-price">$199</p>
-                </div>
-            </div>
-            
-            <div class="product-card">
-                <div class="product-image-wrapper">
-                    <img src="images/product-4.jpg" alt="Cashmere Sweater" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Cashmere Sweater</h3>
-                    <p class="product-category">Tops</p>
-                    <p class="product-price">$179</p>
-                </div>
-            </div>
-            
-            <div class="product-card">
-                <div class="product-image-wrapper">
-                    <img src="images/product-5.jpg" alt="Wide Leg Trousers" class="product-image">
-                    <span class="product-badge">New</span>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Wide Leg Trousers</h3>
-                    <p class="product-category">Bottoms</p>
-                    <p class="product-price">$129</p>
-                </div>
-            </div>
-            
-            <div class="product-card">
-                <div class="product-image-wrapper">
-                    <img src="images/product-6.jpg" alt="Leather Handbag" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Leather Handbag</h3>
-                    <p class="product-category">Accessories</p>
-                    <p class="product-price">$249</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Products Section -->
+<section class="section" id="products">
+    <div class="section-header">
+        <h2 class="section-title">Our Collection</h2>
+        <p class="section-subtitle">Handcrafted pieces designed with love and attention to detail</p>
+    </div>
+    
+    <div class="products-grid fade-in">
 
+        <!-- Product 1 -->
+        <div class="product-card">
+            <div class="product-image-wrapper">
+                <img src="images/product-1.jpg" alt="Silk Evening Dress" class="product-image">
+                <span class="product-badge">New</span>
+                <span style="color:red; cursor:pointer;"
+                      onclick="addToWishlist('Silk Evening Dress',2999,'images/product-1.jpg')">❤</span>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Silk Evening Dress</h3>
+                <p class="product-category">Dresses</p>
+                <p class="product-price">₹2999</p>
+                <button onclick="addToCart('Silk Evening Dress',2999,'images/product-1.jpg')">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+            <div class="product-image-wrapper">
+                <img src="images/product-2.jpg" alt="Linen Summer Top" class="product-image">
+                <span style="color:red; cursor:pointer;"
+                      onclick="addToWishlist('Linen Summer Top',899,'images/product-2.jpg')">❤</span>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Linen Summer Top</h3>
+                <p class="product-category">Tops</p>
+                <p class="product-price">₹899</p>
+                <button onclick="addToCart('Linen Summer Top',899,'images/product-2.jpg')">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+            <div class="product-image-wrapper">
+                <img src="images/product-3.jpg" alt="Floral Maxi Dress" class="product-image">
+                <span class="product-badge">Sale</span>
+                <span style="color:red; cursor:pointer;"
+                      onclick="addToWishlist('Floral Maxi Dress',1999,'images/product-3.jpg')">❤</span>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Floral Maxi Dress</h3>
+                <p class="product-category">Dresses</p>
+                <p class="product-price">₹1999</p>
+                <button onclick="addToCart('Floral Maxi Dress',1999,'images/product-3.jpg')">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card">
+            <div class="product-image-wrapper">
+                <img src="images/product-4.jpg" alt="Cashmere Sweater" class="product-image">
+                <span style="color:red; cursor:pointer;"
+                      onclick="addToWishlist('Cashmere Sweater',1799,'images/product-4.jpg')">❤</span>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Cashmere Sweater</h3>
+                <p class="product-category">Tops</p>
+                <p class="product-price">₹1799</p>
+                <button onclick="addToCart('Cashmere Sweater',1799,'images/product-4.jpg')">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card">
+            <div class="product-image-wrapper">
+                <img src="images/product-5.jpg" alt="Wide Leg Trousers" class="product-image">
+                <span class="product-badge">New</span>
+                <span style="color:red; cursor:pointer;"
+                      onclick="addToWishlist('Wide Leg Trousers',1299,'images/product-5.jpg')">❤</span>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Wide Leg Trousers</h3>
+                <p class="product-category">Bottoms</p>
+                <p class="product-price">₹1299</p>
+                <button onclick="addToCart('Wide Leg Trousers',1299,'images/product-5.jpg')">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card">
+            <div class="product-image-wrapper">
+                <img src="images/product-6.jpg" alt="Leather Handbag" class="product-image">
+                <span style="color:red; cursor:pointer;"
+                      onclick="addToWishlist('Leather Handbag',2499,'images/product-6.jpg')">❤</span>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Leather Handbag</h3>
+                <p class="product-category">Accessories</p>
+                <p class="product-price">₹2499</p>
+                <button onclick="addToCart('Leather Handbag',2499,'images/product-6.jpg')">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+
+    </div>
+</section>
     <!-- About Section -->
     <section class="about-section" id="about">
         <div class="section-header">
@@ -264,5 +301,22 @@
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+function addToCart(name, price, image) {
+    cart.push({ name, price, image });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(name + " added to Cart");
+}
+
+function addToWishlist(name, price, image) {
+    wishlist.push({ name, price, image });
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    alert(name + " added to Wishlist");
+}
+</script>  
 </body>
 </html>
