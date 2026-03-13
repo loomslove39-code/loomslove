@@ -2,6 +2,23 @@
 // LOOMSLOVE - JavaScript Functionality
 // ============================================
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCi40X2FQIbJu3pj8xIHru-ijskoRCOWJs",
+    authDomain: "loomslove-f4fb2.firebaseapp.com",
+    projectId: "loomslove-f4fb2",
+    storageBucket: "loomslove-f4fb2.firebasestorage.app",
+    messagingSenderId: "395398649739",
+    appId: "1:395398649739:web:c399719cf62c80ef40b018e"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -426,4 +443,130 @@ if (cartOverlay) {
 }
 
 // Initialize on load
-document.addEventListener('DOMContentLoaded', updateCartUI);
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartUI();
+    fetchAndRenderProducts();
+});
+
+// ============================================
+// DYNAMIC PRODUCT RENDERING (Firebase)
+// ============================================
+
+async function fetchAndRenderProducts() {
+    try {
+        const querySnapshot = await getDocs(collection(db, "products"));
+
+        let products = [];
+        querySnapshot.forEach((doc) => {
+            products.push({ id: doc.id, ...doc.data() });
+        });
+
+        // Fallback dummy data if DB is empty
+        if (products.length === 0) {
+            products = [
+                { id: "1", name: "Linen Summer Top", price: 899, originalPrice: 1499, category: "budget-love", image: "images/product-2.jpg" },
+                { id: "2", name: "Wide Leg Trousers", price: 1299, originalPrice: 1999, category: "budget-love", image: "images/product-5.jpg" },
+                { id: "3", name: "Cashmere Sweater", price: 1799, originalPrice: null, category: "classic-love", image: "images/product-4.jpg" },
+                { id: "4", name: "Floral Maxi Dress", price: 1999, originalPrice: 2499, category: "festive-love", image: "images/product-3.jpg" },
+                { id: "5", name: "Silk Evening Dress", price: 2999, originalPrice: null, category: "luxury-love", image: "images/product-1.jpg" },
+                { id: "6", name: "Leather Handbag", price: 2499, originalPrice: null, category: "luxury-love", image: "images/product-6.jpg" }
+            ];
+            console.log("Database empty. Using fallback sample products.");
+        }
+
+        // Clear existing hardcoded grid HTML
+        ['budget-love', 'classic-love', 'festive-love', 'luxury-love'].forEach(cat => {
+            const grid = document.querySelector(`#${cat} .products-grid`);
+            if (grid) grid.innerHTML = '';
+        });
+
+        // Inject products into correct categories
+        products.forEach(p => {
+            const grid = document.querySelector(`#${p.category} .products-grid`);
+            if (grid) {
+                // Determine badge style
+                let badgeClass = '';
+                let badgeText = '';
+                if (p.category === 'budget-love') { badgeClass = 'budget-badge'; badgeText = 'Budget'; }
+                if (p.category === 'classic-love') { badgeClass = ''; badgeText = ''; }
+                if (p.category === 'festive-love') { badgeClass = 'festive-badge'; badgeText = 'Festive'; }
+                if (p.category === 'luxury-love') { badgeClass = 'luxury-badge'; badgeText = 'Luxury'; }
+
+                let badgeHtml = badgeText ? `<span class="product-badge ${badgeClass}">${badgeText}</span>` : '';
+
+                // Calculate discount if originalPrice exists
+                let priceHtml = `<div class="product-price-row"><span class="product-price">₹${p.price}</span></div>`;
+                if (p.originalPrice && p.originalPrice > p.price) {
+                    const discount = Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100);
+                    priceHtml = `
+                        <div class="product-price-row">
+                            <span class="product-price">₹${p.price}</span>
+                            <span class="product-price-original">₹${p.originalPrice}</span>
+                            <span class="product-discount">${discount}% OFF</span>
+                        </div>
+                    `;
+                }
+
+                // Make safe strings for onClick functions
+                const safeName = p.name.replace(/'/g, "\\'");
+                const safeImg = p.image.replace(/'/g, "\\'");
+
+                const html = `
+                    <div class="product-card">
+                        <div class="product-image-wrapper">
+                            <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='images/placeholder.jpg'">
+                            ${badgeHtml}
+                            <div class="wishlist-btn" onclick="addToWishlist('${safeName}', ${p.price}, '${safeImg}')">❤</div>
+                        </div>
+                        <div class="product-info">
+                            <p class="product-category">${p.category.replace('-', ' ')}</p>
+                            <h3 class="product-name">${p.name}</h3>
+                            ${priceHtml}
+                            <div class="size-selector">
+                                <div class="size-btn">S</div>
+                                <div class="size-btn selected">M</div>
+                                <div class="size-btn">L</div>
+                                <div class="size-btn">XL</div>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn-add-cart" onclick="addToCart('${safeName}', ${p.price}, '${safeImg}')">Add to Cart</button>
+                                <button class="btn-buy-whatsapp" onclick="buyOnWhatsApp('${safeName}', ${p.price})">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Buy on WhatsApp
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += html;
+            }
+        });
+
+        // Re-attach size selection event listeners for newly injected HTML
+        attachSizeSelectors();
+
+    } catch (error) {
+        console.error("Error fetching products from Firebase:", error);
+    }
+}
+
+// Function to attach click listeners to size buttons (called after dynamic render)
+function attachSizeSelectors() {
+    const sizeSelectors = document.querySelectorAll('.size-selector');
+    sizeSelectors.forEach(selector => {
+        const buttons = selector.querySelectorAll('.size-btn');
+        buttons.forEach(btn => {
+            // Remove old listeners to prevent duplicates if called multiple times
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+
+            newBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                buttons.forEach(b => {
+                    const found = b.parentNode ? b : selector.querySelector('.size-btn:nth-child(' + (Array.from(b.parentNode.children).indexOf(b) + 1) + ')');
+                    if (found) found.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+    });
+}
