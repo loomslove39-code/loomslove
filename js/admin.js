@@ -5,12 +5,12 @@ import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimest
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCi40X2FQIbJu3pj8xIHru-ijskoRCOWJs",
+    apiKey: "AIzaSyCi40X2FQIbJu3pj8xIHiu-ijskoRC0WJs",
     authDomain: "loomslove-f4fb2.firebaseapp.com",
     projectId: "loomslove-f4fb2",
     storageBucket: "loomslove-f4fb2.firebasestorage.app",
     messagingSenderId: "395398649739",
-    appId: "1:395398649739:web:c399719cf62c80ef40b018e",
+    appId: "1:395398649739:web:c399719cf6c80ef40b018e",
     measurementId: "G-D1HWZ24HGP"
 };
 

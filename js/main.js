@@ -7,7 +7,7 @@ import { getFirestore, collection, getDocs } from "https://www.gstatic.com/fireb
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCi40X2FQIbJu3pj8xIHru-ijskoRCOWJs",
+    apiKey: "AIzaSyCi40X2FQIbJu3pj8xIHiu-ijskoRC0WJs",
     authDomain: "loomslove-f4fb2.firebaseapp.com",
     projectId: "loomslove-f4fb2",
     storageBucket: "loomslove-f4fb2.firebasestorage.app",
