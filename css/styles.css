@@ -3,58 +3,57 @@
    Modern Design System & Styles
    ============================================ */
 
-/* Import Premium Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+/* Import Premium Minimalist Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap');
 
 /* ============================================
    DESIGN TOKENS & CSS VARIABLES
    ============================================ */
 :root {
-  /* Color Palette - Premium Feminine Aesthetic */
-  --color-primary: #8E4C56; /* Deep Rose / Maroon */
-  --color-secondary: #D7A9A3; /* Dusty Pink */
-  --color-accent: #E8B4B8; /* Soft Blush */
-  --color-accent-light: #FCEEEE; /* Champagne / Very Light Pink */
+  /* Color Palette - Minimalist Boutique (Zara/Mango style) */
+  --color-primary: #000000;
+  --color-secondary: #555555;
+  --color-accent: #000000;
+  --color-accent-light: #F7F5F0; /* Extremely subtle warm off-white */
   --color-white: #FFFFFF;
-  --color-off-white: #FCFBFB; /* Warmer, softer white */
-  --color-charcoal: #4A4A4A; /* Softer text color than black */
-  --color-gray-light: #F2ECED;
-  --color-gray-medium: #D1C5C6;
+  --color-off-white: #FFFFFF;
+  --color-charcoal: #1A1A1A;
+  --color-gray-light: #F0F0F0;
+  --color-gray-medium: #E0E0E0;
 
-  /* Gradients */
-  --gradient-hero: linear-gradient(135deg, #8E4C56 0%, #D7A9A3 100%);
-  --gradient-overlay: linear-gradient(180deg, transparent 0%, rgba(142, 76, 86, 0.4) 100%);
-  --gradient-shimmer: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  --gradient-btn: linear-gradient(135deg, #8E4C56 0%, #B56571 100%);
+  /* Gradients Removed - Solid Colors Only */
+  --gradient-hero: #000000;
+  --gradient-overlay: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
+  --gradient-btn: #000000;
 
   /* Typography */
-  --font-heading: 'Playfair Display', serif;
+  --font-heading: 'Inter', sans-serif;
   --font-body: 'Inter', sans-serif;
 
   /* Spacing Scale */
   --space-xs: 0.5rem;
   --space-sm: 1rem;
   --space-md: 1.5rem;
-  --space-lg: 2.5rem;
-  --space-xl: 4rem;
-  --space-2xl: 6rem;
+  --space-lg: 3rem;  /* Increased for more breathing room */
+  --space-xl: 5rem;
+  --space-2xl: 8rem;
 
-  /* Effects */
-  --shadow-sm: 0 4px 12px rgba(142, 76, 86, 0.05);
-  --shadow-md: 0 8px 24px rgba(142, 76, 86, 0.08);
-  --shadow-lg: 0 12px 36px rgba(142, 76, 86, 0.12);
-  --shadow-hover: 0 16px 48px rgba(142, 76, 86, 0.15);
+  /* Effects - Very Subtle, nearly flat */
+  --shadow-sm: none;
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.04); /* Ultra subtle */
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.08);
 
   /* Transitions */
-  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 350ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 200ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
 
-  /* Border Radius */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 30px;
+  /* Border Radius - Sharp Edges */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
 }
 
 /* ============================================
@@ -192,16 +191,16 @@ button {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--color-primary) 0%, #B56571 50%, var(--color-secondary) 100%);
+  background: var(--color-gray-light);
 }
 
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   animation: patternMove 30s linear infinite;
-  opacity: 0.5;
+  opacity: 0.8;
 }
 
 @keyframes patternMove {
@@ -218,7 +217,7 @@ button {
   position: relative;
   z-index: 2;
   text-align: center;
-  color: var(--color-white);
+  color: var(--color-primary);
   max-width: 900px;
   padding: 2rem;
   animation: fadeInUp 1s ease-out;
@@ -256,36 +255,20 @@ button {
 .cta-button {
   display: inline-block;
   padding: 1rem 3rem;
-  background: var(--color-white);
-  color: var(--color-primary);
-  font-weight: 600;
-  font-size: 1.1rem;
-  border-radius: 50px; /* Pill shape for softer look */
-  box-shadow: var(--shadow-lg);
-  letter-spacing: 1px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-primary);
+  letter-spacing: 2px;
   text-transform: uppercase;
-  position: relative;
-  overflow: hidden;
-}
-
-.cta-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: var(--gradient-shimmer);
-  transition: left var(--transition-slow);
+  transition: all var(--transition-fast);
 }
 
 .cta-button:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-hover);
-}
-
-.cta-button:hover::before {
-  left: 100%;
+  background: var(--color-white);
+  color: var(--color-primary);
 }
 
 /* ============================================
@@ -356,11 +339,10 @@ button {
 
 .product-card {
   background: var(--color-white);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(142, 76, 86, 0.08); /* Soft rose border */
-  transition: all var(--transition-base);
+  border: 1px solid var(--color-gray-medium);
+  transition: all var(--transition-fast);
   cursor: pointer;
   position: relative;
   display: flex;
@@ -368,8 +350,7 @@ button {
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary);
 }
 
 .product-image-wrapper {
@@ -463,19 +444,19 @@ button {
 
 .product-price {
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--color-primary);
 }
 
 .product-price-original {
   font-size: 0.8rem;
-  color: #999;
+  color: var(--color-secondary);
   text-decoration: line-through;
 }
 
 .product-discount {
   font-size: 0.75rem;
-  color: #ff905a;
+  color: var(--color-primary);
   font-weight: 600;
 }
 
@@ -493,38 +474,40 @@ button {
   background: var(--color-white);
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 500;
   text-transform: uppercase;
-  border-radius: 50px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 1px;
   transition: all var(--transition-fast);
 }
 
 .btn-add-cart:hover {
-  background: var(--gradient-btn);
+  background: var(--color-primary);
   color: var(--color-white);
-  border-color: transparent;
-  box-shadow: 0 4px 12px rgba(142, 76, 86, 0.2);
 }
 
 .btn-buy-whatsapp {
   width: 100%;
   padding: 0.7rem;
-  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  background: #000000;
   color: white;
-  border: none;
-  font-size: 0.85rem;
-  font-weight: 600;
+  border: 1px solid #000000;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  border-radius: 50px;
+  border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
 }
 
 .btn-buy-whatsapp:hover {
-  background: #128C7E;
+  background: var(--color-white);
+  color: #000000;
 }
 
 /* Size Selectors */
@@ -564,10 +547,11 @@ button {
    FEATURED COLLECTION
    ============================================ */
 .featured-collection {
-  background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-off-white) 100%);
+  background: var(--color-white);
   padding: var(--space-2xl) 2rem;
   position: relative;
   overflow: hidden;
+  border-top: 1px solid var(--color-gray-light);
 }
 
 .featured-grid {
@@ -580,10 +564,10 @@ button {
 
 .featured-item {
   position: relative;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-sm);
   overflow: hidden;
   aspect-ratio: 1;
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-gray-medium);
   transition: all var(--transition-base);
 }
 
@@ -617,7 +601,9 @@ button {
   font-family: var(--font-heading);
   font-size: 1.8rem;
   color: var(--color-white);
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .featured-desc {
@@ -666,15 +652,21 @@ button {
 
 /* Category Badges */
 .budget-badge {
-  background: #8FA192 !important; /* Soft muted sage green */
+  background: var(--color-charcoal) !important;
+  color: var(--color-white) !important;
+  border: 1px solid var(--color-charcoal);
 }
 
 .festive-badge {
-  background: #B5838D !important; /* Soft dusty plum */
+  background: var(--color-white) !important;
+  color: var(--color-primary) !important;
+  border: 1px solid var(--color-primary);
 }
 
 .luxury-badge {
-  background: linear-gradient(135deg, #DFB174, #C69A57) !important; /* Soft gold gradient */
+  background: var(--color-primary) !important;
+  color: var(--color-white) !important;
+  border: 1px solid var(--color-primary);
 }
 
 /* ============================================
