@@ -30,12 +30,14 @@ const logoutBtn = document.getElementById('logoutBtn');
 
 const addProductForm = document.getElementById('addProductForm');
 const pName = document.getElementById('pName');
-const pImage = document.getElementById('pImage');
+const pImageFile = document.getElementById('pImageFile');
 const pCategory = document.getElementById('pCategory');
 const pPrice = document.getElementById('pPrice');
 const pOriginal = document.getElementById('pOriginal');
 const addBtn = document.getElementById('addBtn');
 const productTableBody = document.getElementById('productTableBody');
+
+const IMGBB_API_KEY = "9fb395bf1b8aeba531465cc61e955009"; // Get this from api.imgbb.com
 
 // ==========================================
 // AUTHENTICATION LOGIC
@@ -136,13 +138,39 @@ function renderProductRow(id, data) {
 // Add New Product
 addProductForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    addBtn.textContent = 'Adding...';
+    addBtn.textContent = 'Uploading Image...';
     addBtn.disabled = true;
 
     try {
+        const file = pImageFile.files[0];
+        if (!file) throw new Error("Please select an image first.");
+
+        if (IMGBB_API_KEY === "YOUR_IMGBB_API_KEY_HERE") {
+            throw new Error("Please configure your ImgBB API key in js/admin.js first.");
+        }
+
+        // 1. Upload to ImgBB
+        const formData = new FormData();
+        formData.append('image', file);
+
+        const imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+            method: 'POST',
+            body: formData
+        });
+
+        const imgbbData = await imgbbResponse.json();
+
+        if (!imgbbResponse.ok || !imgbbData.success) {
+            throw new Error(imgbbData.error ? imgbbData.error.message : "Failed to upload image to ImgBB");
+        }
+
+        const imageUrl = imgbbData.data.url;
+
+        // 2. Save to Firestore
+        addBtn.textContent = 'Saving Data...';
         const productData = {
             name: pName.value.trim(),
-            image: pImage.value.trim() || 'images/product-2.jpg',
+            image: imageUrl,
             category: pCategory.value,
             price: Number(pPrice.value),
             originalPrice: pOriginal.value ? Number(pOriginal.value) : null,
@@ -158,7 +186,7 @@ addProductForm.addEventListener('submit', async (e) => {
 
     } catch (error) {
         console.error("Error adding product: ", error);
-        alert('Failed to add product: ' + error.message);
+        alert('Failed: ' + error.message);
     } finally {
         addBtn.textContent = 'Add to Store';
         addBtn.disabled = false;
