@@ -1145,3 +1145,29 @@ button {
     font-size: 2rem;
   }
 }
+
+/* ============================================
+   SOLD OUT OVERLAY
+   ============================================ */
+.sold-out-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  z-index: 5;
+}
+
+.product-card.sold-out {
+  opacity: 0.75;
+}
+
+.product-card.sold-out:hover .product-image {
+  transform: none;
+}

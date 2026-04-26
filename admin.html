@@ -1,309 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoomsLove - Admin Dashboard</title>
-
-    <!-- Google Fonts -->
+    <title>LoomsLove - Admin Portal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
-
-    <style>
-        :root {
-            --primary: #4a3e3d;
-            --accent: #d4af37;
-            --bg: #f9f7f5;
-            --white: #ffffff;
-            --gray: #e0e0e0;
-            --text: #333333;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            padding: 0;
-            color: var(--text);
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--gray);
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary);
-            margin: 0;
-        }
-
-        button {
-            background-color: var(--primary);
-            color: var(--white);
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        button:hover {
-            background-color: var(--accent);
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-        }
-
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
-
-        /* Login Screen */
-        #loginScreen {
-            max-width: 400px;
-            margin: 100px auto;
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--gray);
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        #loginError {
-            color: red;
-            font-size: 0.85rem;
-            margin-top: 1rem;
-            display: none;
-        }
-
-        /* Dashboard Screen */
-        #dashboardScreen {
-            display: none;
-            /* Hidden by default until login */
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--gray);
-        }
-
-        .card h2 {
-            margin-top: 0;
-            font-size: 1.2rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-
-        /* Products Table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--gray);
-        }
-
-        th {
-            font-weight: 600;
-            color: var(--primary);
-            background: #fdfcfb;
-        }
-
-        .product-img-preview {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-
-        .badge {
-            background: var(--gray);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-
-        .badge-budget {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .badge-classic {
-            background: #8D6E63;
-            color: white;
-        }
-
-        .badge-festive {
-            background: #9C27B0;
-            color: white;
-        }
-
-        .badge-luxury {
-            background: #FFD700;
-            color: black;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: var(--secondary);
-            font-style: italic;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👗</text></svg>">
 </head>
-
 <body>
-
-    <!-- LOGIN SCREEN -->
-    <div id="loginScreen">
-        <h1 style="margin-bottom: 2rem;">Admin Login</h1>
-
-        <form id="loginForm">
-            <div class="form-group">
-                <label>Email Address</label>
-                <input type="email" id="email" required placeholder="admin@loomslove.com">
+    <!-- AUTH SCREEN -->
+    <div id="authScreen" class="auth-screen">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>LoomsLove</h1>
+                <p>Admin Portal</p>
             </div>
-
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="password" required placeholder="••••••••">
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Sign In</button>
+                <button class="auth-tab" data-tab="register">Register</button>
             </div>
-
-            <button type="submit" style="width: 100%; margin-top: 1rem;">Login</button>
-            <p id="loginError">Invalid email or password.</p>
-        </form>
-    </div>
-
-    <!-- MAIN DASHBOARD -->
-    <div id="dashboardScreen" class="container">
-        <header>
-            <h1>LoomsLove Inventory Manager</h1>
-            <button id="logoutBtn">Logout</button>
-        </header>
-
-        <div class="dashboard-grid">
-
-            <!-- ADD PRODUCT FORM -->
-            <div class="card">
-                <h2>Add New Product</h2>
-                <form id="addProductForm">
-                    <div class="form-group">
-                        <label>Product Name</label>
-                        <input type="text" id="pName" required placeholder="e.g. Silk Evening Dress">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Product Image</label>
-                        <input type="file" id="pImageFile" accept="image/*" required>
-                        <p style="font-size:0.7rem; color:gray; margin-top:0.2rem">Select an image to upload directly via ImgBB.</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select id="pCategory" required>
-                            <option value="budget-love">Budget Love</option>
-                            <option value="classic-love">Classic Love</option>
-                            <option value="festive-love">Festive Love</option>
-                            <option value="luxury-love">Luxury Love</option>
-                        </select>
-                    </div>
-
-                    <div style="display:flex; gap:1rem;">
-                        <div class="form-group" style="flex:1;">
-                            <label>Selling Price (₹)</label>
-                            <input type="number" id="pPrice" required placeholder="e.g. 1999">
-                        </div>
-
-                        <div class="form-group" style="flex:1;">
-                            <label>Original Price (₹)</label>
-                            <input type="number" id="pOriginal" placeholder="Optional">
-                        </div>
-                    </div>
-
-                    <button type="submit" id="addBtn" style="width: 100%; margin-top: 1rem;">Add to Store</button>
-                </form>
-            </div>
-
-            <!-- PRODUCT LIST -->
-            <div class="card">
-                <h2>Current Products</h2>
-                <div style="overflow-x: auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="productTableBody">
-                            <tr>
-                                <td colspan="5" class="loading">Loading products from database...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" required placeholder="admin@loomslove.com">
                 </div>
-            </div>
-
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="auth-btn">Sign In</button>
+            </form>
+            <form id="registerForm" class="auth-form" style="display:none;">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="regEmail" required placeholder="admin@loomslove.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" required placeholder="Min 6 characters" minlength="6">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="regConfirm" required placeholder="Re-enter password" minlength="6">
+                </div>
+                <button type="submit" class="auth-btn">Create Account</button>
+            </form>
+            <p id="authError" class="auth-error"></p>
         </div>
     </div>
 
-    <!-- Firebase SDK Modular Imports -->
+    <!-- DASHBOARD -->
+    <div id="dashboardScreen" class="dashboard" style="display:none;">
+        <aside class="sidebar">
+            <div class="sidebar-logo"><h2>LoomsLove</h2><span>Admin Portal</span></div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="dashboard"><span class="nav-icon">📊</span> Dashboard</a>
+                <a href="#" class="nav-item" data-section="products"><span class="nav-icon">📦</span> Products</a>
+                <a href="#" class="nav-item" data-section="orders"><span class="nav-icon">🛒</span> Orders</a>
+            </nav>
+            <div class="sidebar-footer"><button id="logoutBtn" class="logout-btn">🚪 Logout</button></div>
+        </aside>
+        <main class="main-content">
+            <header class="top-bar">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <h1 id="pageTitle">Dashboard</h1>
+                <div class="user-info"><span id="userEmail"></span></div>
+            </header>
+            <!-- Dashboard -->
+            <section id="sec-dashboard" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card stat-products"><div class="stat-icon">📦</div><div class="stat-info"><h3 id="statProducts">0</h3><p>Total Products</p></div></div>
+                    <div class="stat-card stat-orders"><div class="stat-icon">🛒</div><div class="stat-info"><h3 id="statOrders">0</h3><p>Total Orders</p></div></div>
+                    <div class="stat-card stat-revenue"><div class="stat-icon">💰</div><div class="stat-info"><h3 id="statRevenue">₹0</h3><p>Revenue</p></div></div>
+                    <div class="stat-card stat-lowstock"><div class="stat-icon">⚠️</div><div class="stat-info"><h3 id="statLowStock">0</h3><p>Low Stock</p></div></div>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="card"><h2>Recent Orders</h2><div id="recentOrders"><p class="empty-msg">No orders yet</p></div></div>
+                    <div class="card"><h2>Low Stock Alerts</h2><div id="lowStockAlerts"><p class="empty-msg">All items in stock</p></div></div>
+                </div>
+            </section>
+            <!-- Products -->
+            <section id="sec-products" class="content-section">
+                <div class="section-toolbar">
+                    <input type="text" id="productSearch" placeholder="Search products..." class="search-input">
+                    <button id="addProductBtn" class="primary-btn">+ Add Product</button>
+                </div>
+                <div class="card"><div class="table-wrapper">
+                    <table><thead><tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead>
+                    <tbody id="productTableBody"><tr><td colspan="6" class="loading-cell">Loading...</td></tr></tbody></table>
+                </div></div>
+            </section>
+            <!-- Orders -->
+            <section id="sec-orders" class="content-section">
+                <div class="section-toolbar">
+                    <input type="text" id="orderSearch" placeholder="Search orders..." class="search-input">
+                    <button id="addOrderBtn" class="primary-btn">+ Log Order</button>
+                </div>
+                <div class="card"><div class="table-wrapper">
+                    <table><thead><tr><th>Order #</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+                    <tbody id="orderTableBody"><tr><td colspan="7" class="loading-cell">Loading...</td></tr></tbody></table>
+                </div></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div id="productModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header"><h2 id="productModalTitle">Add New Product</h2><button class="modal-close" data-modal="productModal">✕</button></div>
+            <form id="productForm">
+                <div class="form-group"><label>Product Name</label><input type="text" id="pName" required placeholder="e.g. Silk Evening Dress"></div>
+                <div class="form-group"><label>Product Image</label>
+                    <div class="file-upload-area"><input type="file" id="pImageFile" accept="image/*" required><p>📷 Click or drag image here</p><img id="imagePreview" class="img-preview" style="display:none;"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Category</label><select id="pCategory" required><option value="budget-love">Budget Love</option><option value="classic-love">Classic Love</option><option value="festive-love">Festive Love</option><option value="luxury-love">Luxury Love</option></select></div>
+                    <div class="form-group"><label>Stock Quantity</label><input type="number" id="pStock" required placeholder="e.g. 25" min="0"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Selling Price (₹)</label><input type="number" id="pPrice" required placeholder="e.g. 1999"></div>
+                    <div class="form-group"><label>Original Price (₹)</label><input type="number" id="pOriginal" placeholder="Optional"></div>
+                </div>
+                <input type="hidden" id="editProductId"><input type="hidden" id="existingImageUrl">
+                <button type="submit" id="productSubmitBtn" class="primary-btn full-width">Add Product</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ORDER MODAL -->
+    <div id="orderModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header"><h2 id="orderModalTitle">Log New Order</h2><button class="modal-close" data-modal="orderModal">✕</button></div>
+            <form id="orderForm">
+                <div class="form-row">
+                    <div class="form-group"><label>Customer Name</label><input type="text" id="oCustomer" required placeholder="Customer name"></div>
+                    <div class="form-group"><label>Phone Number</label><input type="tel" id="oPhone" required placeholder="+91 98765 43210"></div>
+                </div>
+                <div class="form-group"><label>Items Ordered</label><textarea id="oItems" required placeholder="e.g. 1x Silk Evening Dress (L), 2x Linen Top (M)" rows="3"></textarea></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Total Amount (₹)</label><input type="number" id="oTotal" required placeholder="e.g. 4999"></div>
+                    <div class="form-group"><label>Status</label><select id="oStatus"><option value="pending">Pending</option><option value="confirmed">Confirmed</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option></select></div>
+                </div>
+                <div class="form-group"><label>Notes</label><textarea id="oNotes" placeholder="Additional notes..." rows="2"></textarea></div>
+                <input type="hidden" id="editOrderId">
+                <button type="submit" id="orderSubmitBtn" class="primary-btn full-width">Log Order</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
     <script type="module" src="js/admin.js"></script>
 </body>
-
 </html>

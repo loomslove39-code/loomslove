@@ -1,207 +1,149 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import { auth, db } from './firebase-config.js';
+import {
+    signInWithEmailAndPassword, createUserWithEmailAndPassword,
+    onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+import { initProducts } from './admin-products.js';
+import { initOrders } from './admin-orders.js';
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyCi40X2FQIbJu3pj8xIHiu-ijskoRC0WJs",
-    authDomain: "loomslove-f4fb2.firebaseapp.com",
-    projectId: "loomslove-f4fb2",
-    storageBucket: "loomslove-f4fb2.firebasestorage.app",
-    messagingSenderId: "395398649739",
-    appId: "1:395398649739:web:c399719cf6c80ef40b018e",
-    measurementId: "G-D1HWZ24HGP"
+// Toast notification
+window.showToast = function (message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast toast-${type} show`;
+    setTimeout(() => toast.classList.remove('show'), 3000);
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// DOM Elements
-const loginScreen = document.getElementById('loginScreen');
-const dashboardScreen = document.getElementById('dashboardScreen');
-const loginForm = document.getElementById('loginForm');
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
-const loginError = document.getElementById('loginError');
-const logoutBtn = document.getElementById('logoutBtn');
-
-const addProductForm = document.getElementById('addProductForm');
-const pName = document.getElementById('pName');
-const pImageFile = document.getElementById('pImageFile');
-const pCategory = document.getElementById('pCategory');
-const pPrice = document.getElementById('pPrice');
-const pOriginal = document.getElementById('pOriginal');
-const addBtn = document.getElementById('addBtn');
-const productTableBody = document.getElementById('productTableBody');
-
-const IMGBB_API_KEY = "9fb395bf1b8aeba531465cc61e955009"; // Get this from api.imgbb.com
-
-// ==========================================
-// AUTHENTICATION LOGIC
-// ==========================================
-
-// Check Auth State
+// Auth state
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        // User is signed in, show dashboard
-        loginScreen.style.display = 'none';
-        dashboardScreen.style.display = 'block';
-        fetchProducts(); // Load products once logged in
+        document.getElementById('authScreen').style.display = 'none';
+        document.getElementById('dashboardScreen').style.display = 'flex';
+        document.getElementById('userEmail').textContent = user.email;
+        loadDashboard();
+        initProducts();
+        initOrders();
     } else {
-        // User is signed out, show login
-        loginScreen.style.display = 'block';
-        dashboardScreen.style.display = 'none';
+        document.getElementById('authScreen').style.display = 'flex';
+        document.getElementById('dashboardScreen').style.display = 'none';
     }
 });
 
 // Login
-loginForm.addEventListener('submit', async (e) => {
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    loginError.style.display = 'none';
-
+    const errEl = document.getElementById('authError');
+    errEl.style.display = 'none';
     try {
-        await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
-    } catch (error) {
-        console.error("Login failed:", error.message);
-        loginError.style.display = 'block';
-        loginError.textContent = "Invalid email or password.";
+        await signInWithEmailAndPassword(
+            auth,
+            document.getElementById('loginEmail').value,
+            document.getElementById('loginPassword').value
+        );
+        showToast('Welcome back!');
+    } catch (err) {
+        errEl.textContent = err.code === 'auth/invalid-credential' ? 'Invalid email or password.' : err.message;
+        errEl.style.display = 'block';
+    }
+});
+
+// Register
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errEl = document.getElementById('authError');
+    errEl.style.display = 'none';
+    const pw = document.getElementById('regPassword').value;
+    if (pw !== document.getElementById('regConfirm').value) {
+        errEl.textContent = 'Passwords do not match.';
+        errEl.style.display = 'block';
+        return;
+    }
+    try {
+        await createUserWithEmailAndPassword(auth, document.getElementById('regEmail').value, pw);
+        showToast('Account created!');
+    } catch (err) {
+        errEl.textContent = err.message;
+        errEl.style.display = 'block';
     }
 });
 
 // Logout
-logoutBtn.addEventListener('click', () => {
-    signOut(auth);
+document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+
+// Auth tabs
+document.querySelectorAll('.auth-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const isLogin = tab.dataset.tab === 'login';
+        document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
+        document.getElementById('registerForm').style.display = isLogin ? 'none' : 'block';
+        document.getElementById('authError').style.display = 'none';
+    });
 });
 
-// ==========================================
-// FIRESTORE CRUD LOGIC (Products)
-// ==========================================
-
-// Fetch Products from Firestore
-async function fetchProducts() {
-    productTableBody.innerHTML = '<tr><td colspan="5" class="loading">Loading products...</td></tr>';
-
-    try {
-        const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
-        const querySnapshot = await getDocs(q);
-
-        productTableBody.innerHTML = ''; // Clear loading
-
-        if (querySnapshot.empty) {
-            productTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center">No products found. Add some above!</td></tr>';
-            return;
-        }
-
-        querySnapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            renderProductRow(docSnap.id, data);
-        });
-
-    } catch (error) {
-        console.error("Error fetching products:", error);
-        productTableBody.innerHTML = `<tr><td colspan="5" style="color:red; text-align:center">Error loading products: ${error.message}</td></tr>`;
-    }
-}
-
-// Render a single row in the table
-function renderProductRow(id, data) {
-    const tr = document.createElement('tr');
-
-    // Determine badge class based on category
-    let badgeClass = '';
-    let categoryDisplay = data.category;
-    if (data.category === 'budget-love') badgeClass = 'badge-budget';
-    if (data.category === 'classic-love') badgeClass = 'badge-classic';
-    if (data.category === 'festive-love') badgeClass = 'badge-festive';
-    if (data.category === 'luxury-love') badgeClass = 'badge-luxury';
-
-    tr.innerHTML = `
-        <td><img src="${data.image}" alt="${data.name}" class="product-img-preview" onerror="this.src='images/placeholder.jpg'"></td>
-        <td style="font-weight:600">${data.name}</td>
-        <td><span class="badge ${badgeClass}">${categoryDisplay.replace('-', ' ')}</span></td>
-        <td>₹${data.price}</td>
-        <td>
-            <button class="btn-danger" data-id="${id}">Delete</button>
-        </td>
-    `;
-
-    // Setup delete button
-    const deleteBtn = tr.querySelector('.btn-danger');
-    deleteBtn.addEventListener('click', () => deleteProduct(id, data.name, tr));
-
-    productTableBody.appendChild(tr);
-}
-
-// Add New Product
-addProductForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    addBtn.textContent = 'Uploading Image...';
-    addBtn.disabled = true;
-
-    try {
-        const file = pImageFile.files[0];
-        if (!file) throw new Error("Please select an image first.");
-
-        if (IMGBB_API_KEY === "YOUR_IMGBB_API_KEY_HERE") {
-            throw new Error("Please configure your ImgBB API key in js/admin.js first.");
-        }
-
-        // 1. Upload to ImgBB
-        const formData = new FormData();
-        formData.append('image', file);
-
-        const imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-            method: 'POST',
-            body: formData
-        });
-
-        const imgbbData = await imgbbResponse.json();
-
-        if (!imgbbResponse.ok || !imgbbData.success) {
-            throw new Error(imgbbData.error ? imgbbData.error.message : "Failed to upload image to ImgBB");
-        }
-
-        const imageUrl = imgbbData.data.url;
-
-        // 2. Save to Firestore
-        addBtn.textContent = 'Saving Data...';
-        const productData = {
-            name: pName.value.trim(),
-            image: imageUrl,
-            category: pCategory.value,
-            price: Number(pPrice.value),
-            originalPrice: pOriginal.value ? Number(pOriginal.value) : null,
-            createdAt: serverTimestamp()
-        };
-
-        await addDoc(collection(db, "products"), productData);
-
-        // Reset form & Refresh table
-        addProductForm.reset();
-        fetchProducts();
-        alert('Product added successfully!');
-
-    } catch (error) {
-        console.error("Error adding product: ", error);
-        alert('Failed: ' + error.message);
-    } finally {
-        addBtn.textContent = 'Add to Store';
-        addBtn.disabled = false;
-    }
+// Sidebar navigation
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = item.dataset.section;
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(`sec-${section}`).classList.add('active');
+        document.getElementById('pageTitle').textContent = section.charAt(0).toUpperCase() + section.slice(1);
+        document.querySelector('.sidebar').classList.remove('open');
+    });
 });
 
-// Delete Product
-async function deleteProduct(id, name, rowElement) {
-    if (confirm(`Are you sure you want to delete "${name}"? This cannot be undone.`)) {
-        try {
-            await deleteDoc(doc(db, "products", id));
-            rowElement.remove(); // Remove from UI smoothly without reloading everything
-        } catch (error) {
-            console.error("Error deleting product: ", error);
-            alert('Failed to delete product: ' + error.message);
-        }
+// Mobile menu
+document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.toggle('open');
+});
+
+// Close modals
+document.querySelectorAll('.modal-close').forEach(btn => {
+    btn.addEventListener('click', () => document.getElementById(btn.dataset.modal).classList.remove('active'));
+});
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.remove('active'); });
+});
+
+// Dashboard stats
+async function loadDashboard() {
+    try {
+        const [prodSnap, orderSnap] = await Promise.all([
+            getDocs(collection(db, "products")),
+            getDocs(collection(db, "orders"))
+        ]);
+
+        const products = [];
+        prodSnap.forEach(d => products.push(d.data()));
+        const orders = [];
+        orderSnap.forEach(d => orders.push(d.data()));
+
+        document.getElementById('statProducts').textContent = products.length;
+        document.getElementById('statOrders').textContent = orders.length;
+
+        const lowStock = products.filter(p => (p.stock ?? 0) <= 5);
+        document.getElementById('statLowStock').textContent = lowStock.length;
+
+        let revenue = 0;
+        orders.forEach(o => { if (o.status !== 'cancelled') revenue += (o.total || 0); });
+        document.getElementById('statRevenue').textContent = '₹' + revenue.toLocaleString('en-IN');
+
+        const alertsDiv = document.getElementById('lowStockAlerts');
+        alertsDiv.innerHTML = lowStock.length > 0
+            ? lowStock.map(p => `<div class="alert-item"><span class="alert-name">${p.name}</span><span class="badge badge-warning">${p.stock ?? 0} left</span></div>`).join('')
+            : '<p class="empty-msg">All items well stocked ✅</p>';
+
+        const recentDiv = document.getElementById('recentOrders');
+        const recent = orders.slice(0, 5);
+        recentDiv.innerHTML = recent.length > 0
+            ? recent.map(o => `<div class="alert-item"><span class="alert-name">${o.customerName || 'N/A'}</span><span class="badge badge-${o.status}">${o.status}</span></div>`).join('')
+            : '<p class="empty-msg">No orders yet</p>';
+    } catch (err) {
+        console.error("Dashboard error:", err);
     }
 }
