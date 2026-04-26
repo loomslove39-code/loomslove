@@ -1,7 +1,7 @@
 import { auth, db } from './firebase-config.js';
 import {
     signInWithEmailAndPassword, createUserWithEmailAndPassword,
-    onAuthStateChanged, signOut
+    onAuthStateChanged, signOut, sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 import { initProducts } from './admin-products.js';
@@ -48,40 +48,37 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     }
 });
 
-// Register
-document.getElementById('registerForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const errEl = document.getElementById('authError');
-    errEl.style.display = 'none';
-    const pw = document.getElementById('regPassword').value;
-    if (pw !== document.getElementById('regConfirm').value) {
-        errEl.textContent = 'Passwords do not match.';
-        errEl.style.display = 'block';
+// Toggle Password Visibility
+document.getElementById('togglePassword').addEventListener('click', function () {
+    const pwdInput = document.getElementById('loginPassword');
+    const isPwd = pwdInput.type === 'password';
+    pwdInput.type = isPwd ? 'text' : 'password';
+    this.textContent = isPwd ? '🙈' : '👁️';
+});
+
+// Forgot Password
+document.getElementById('forgotPasswordBtn').addEventListener('click', async () => {
+    const email = document.getElementById('loginEmail').value.trim();
+    if (!email) {
+        showToast('Please enter your email address first.', 'error');
         return;
     }
+    
     try {
-        await createUserWithEmailAndPassword(auth, document.getElementById('regEmail').value, pw);
-        showToast('Account created!');
+        await sendPasswordResetEmail(auth, email);
+        showToast('Password reset email sent! Please check your inbox.');
     } catch (err) {
-        errEl.textContent = err.message;
-        errEl.style.display = 'block';
+        console.error("Reset error:", err);
+        showToast(err.message, 'error');
     }
 });
+
+
 
 // Logout
 document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
 
-// Auth tabs
-document.querySelectorAll('.auth-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const isLogin = tab.dataset.tab === 'login';
-        document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
-        document.getElementById('registerForm').style.display = isLogin ? 'none' : 'block';
-        document.getElementById('authError').style.display = 'none';
-    });
-});
+
 
 // Sidebar navigation
 document.querySelectorAll('.nav-item').forEach(item => {

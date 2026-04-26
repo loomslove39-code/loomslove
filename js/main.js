@@ -533,10 +533,15 @@ async function fetchAndRenderProducts() {
                             <h3 class="product-name">${p.name}</h3>
                             ${priceHtml}
                             <div class="size-selector">
-                                <div class="size-btn">S</div>
-                                <div class="size-btn selected">M</div>
-                                <div class="size-btn">L</div>
-                                <div class="size-btn">XL</div>
+                                ${(p.sizes || ['S', 'M', 'L', 'XL']).map((s, idx) => {
+                                    const stock = p.inventory ? (p.inventory[s] || 0) : 999;
+                                    const isOutOfStock = stock === 0;
+                                    const isDefault = p.inventory ? (s === 'M' && stock > 0) || (!p.inventory['M'] && idx === 0) : s === 'M';
+                                    return `
+                                        <div class="size-btn${isOutOfStock ? ' out-of-stock' : ''}${isDefault ? ' selected' : ''}" 
+                                             ${isOutOfStock ? 'style="opacity:0.3;cursor:not-allowed;text-decoration:line-through" title="Out of stock"' : ''}>${s}</div>
+                                    `;
+                                }).join('')}
                             </div>
                             <div class="product-actions">
                                 <button class="btn-add-cart" onclick="addToCart('${safeName}', ${p.price}, '${safeImg}')" ${isSoldOut ? 'disabled style="opacity:0.4;cursor:not-allowed"' : ''}>
@@ -573,6 +578,7 @@ function attachSizeSelectors() {
 
             newBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
+                if (this.classList.contains('out-of-stock')) return;
                 buttons.forEach(b => {
                     const found = b.parentNode ? b : selector.querySelector('.size-btn:nth-child(' + (Array.from(b.parentNode.children).indexOf(b) + 1) + ')');
                     if (found) found.classList.remove('selected');

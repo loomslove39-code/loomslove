@@ -30,7 +30,18 @@ export async function fetchProducts() {
         const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
         const snap = await getDocs(q);
         allProducts = [];
-        snap.forEach(d => allProducts.push({ id: d.id, ...d.data() }));
+        snap.forEach(d => {
+            const data = d.data();
+            // Migrate old 'stock' field to inventory if needed
+            if (data.stock !== undefined && !data.inventory) {
+                data.inventory = { "M": data.stock };
+            }
+            // Ensure stock is sum of inventory
+            if (data.inventory) {
+                data.stock = Object.values(data.inventory).reduce((a, b) => a + b, 0);
+            }
+            allProducts.push({ id: d.id, ...data });
+        });
         renderProductTable(allProducts);
     } catch (err) {
         console.error("Fetch products error:", err);
@@ -78,6 +89,9 @@ function openAddProduct() {
     document.getElementById('existingImageUrl').value = '';
     document.getElementById('imagePreview').style.display = 'none';
     document.getElementById('pImageFile').required = true;
+    document.querySelectorAll('.size-stock-input').forEach(input => {
+        input.value = 0;
+    });
     document.getElementById('productModal').classList.add('active');
 }
 
@@ -97,6 +111,13 @@ window._editProduct = function (id) {
     const preview = document.getElementById('imagePreview');
     preview.src = p.image;
     preview.style.display = 'block';
+
+    const inventory = p.inventory || {};
+    document.querySelectorAll('.size-stock-input').forEach(input => {
+        const size = input.dataset.size;
+        input.value = inventory[size] || 0;
+    });
+
     document.getElementById('productModal').classList.add('active');
 };
 
@@ -120,8 +141,19 @@ async function handleProductSubmit(e) {
             category: document.getElementById('pCategory').value,
             price: Number(document.getElementById('pPrice').value),
             originalPrice: document.getElementById('pOriginal').value ? Number(document.getElementById('pOriginal').value) : null,
-            stock: Number(document.getElementById('pStock').value)
+            inventory: {}
         };
+
+        let totalStock = 0;
+        document.querySelectorAll('.size-stock-input').forEach(input => {
+            const qty = Number(input.value) || 0;
+            if (qty > 0) {
+                data.inventory[input.dataset.size] = qty;
+                totalStock += qty;
+            }
+        });
+        data.stock = totalStock;
+        data.sizes = Object.keys(data.inventory); // Keep sizes array for easy filtering if needed
 
         if (editId) {
             await updateDoc(doc(db, "products", editId), data);
